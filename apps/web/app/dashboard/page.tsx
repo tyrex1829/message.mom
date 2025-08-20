@@ -1,8 +1,8 @@
-import { HeroHeader } from "@/components/header";
-import HeroSection from "@/components/hero-section";
-// import { LogoCloud } from "@/components/logo-cloud";
+import Comp584 from "@/components/comp-584";
+// import AdminInfo from "@/components/AdminInfo";
+import React from "react";
 
-export default function Home() {
+export default function page() {
   return (
     <div className="min-h-screen w-full relative bg-black">
       {/* Pearl Mist Background with Top Glow */}
@@ -16,10 +16,9 @@ export default function Home() {
 
       {/* Your Content/Components */}
 
-      <div className="relative">
-        <HeroHeader />
-        <HeroSection />
-        {/* <LogoCloud /> */}
+      <div className="relative flex flex-col">
+        <Comp584 />
+        {/* <AdminInfo /> */}
       </div>
     </div>
   );
