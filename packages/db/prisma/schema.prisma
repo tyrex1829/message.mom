@@ -14,18 +14,53 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String    @id @default(cuid())
   name          String
   email         String
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
+
+  username      String    @unique
+  profile       Profile?
+  messages      Message[] @relation("OwnerMessages")
+
   sessions      Session[]
   accounts      Account[]
 
   @@unique([email])
   @@map("user")
+}
+
+model Profile {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  avatarUrl       String?
+  bio             String?   @db.Text
+  socialsJson     Json?
+  lastSeenVisible Boolean   @default(true)
+  createdAt       DateTime  @default(now()) @db.Timestamptz
+  updatedAt       DateTime  @updatedAt @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profile")
+}
+
+model Message {
+  id            String    @id @default(cuid())
+  ownerId       String
+  body          String    @db.Text
+  createdAt     DateTime  @default(now()) @db.Timestamptz
+  replyBody     String?   @db.Text
+  repliedAt     DateTime? @db.Timestamptz
+  viewTokenHash String    @db.VarChar(128)
+
+  owner User @relation("OwnerMessages", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@index([ownerId, createdAt])
+  @@map("message")
 }
 
 model Session {
