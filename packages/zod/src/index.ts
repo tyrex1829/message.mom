@@ -22,14 +22,6 @@ export const ReplyMessageSchema = z.object({
 });
 
 export const UpdateProfileSchema = z.object({
-  name: z
-    .string()
-    .max(50, "Name is too long")
-    .transform((val) => val.trim())
-    .refine((val) => val.length >= 2, {
-      message: "Name must be at least 2 characters",
-    }),
-
   bio: z
     .string()
     .max(160, "Bio is too long")

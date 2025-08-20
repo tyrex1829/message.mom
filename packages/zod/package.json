@@ -2,11 +2,18 @@
   "name": "@message-mom/zod",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
   },
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,6 +23,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
-    "@message-mom/typescript-config": "workspace:*"
+    "@message-mom/typescript-config": "workspace:*",
+    "typescript": "^5.0.0"
   }
 }
