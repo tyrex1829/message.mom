@@ -16,7 +16,7 @@ export const profile = async (req: Request, res: Response): Promise<void> => {
 
     const user = await prisma.user.findUnique({
       where: {
-        username: sub,
+        name: sub,
       },
       include: {
         profile: true,
@@ -34,7 +34,7 @@ export const profile = async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json({
       exists: true,
-      username: user.username,
+      name: user.name,
       bio: profile?.bio ?? null,
       avatarUrl: profile?.avatarUrl ?? null,
       socials: profile?.socialsJson ?? {},
@@ -65,7 +65,7 @@ export const messages = async (req: Request, res: Response): Promise<void> => {
 
     const owner = await prisma.user.findUnique({
       where: {
-        username: sub,
+        name: sub,
       },
     });
 
@@ -122,7 +122,7 @@ export const fetchRepliedMessages = async (
     }
 
     const owner = await prisma.user.findUnique({
-      where: { username: sub },
+      where: { name: sub },
     });
 
     if (!owner) {

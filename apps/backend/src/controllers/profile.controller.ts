@@ -20,10 +20,9 @@ export const myProfile = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    res.json({
+    res.status(200).json({
       id: user.id,
       email: user.email,
-      username: user.username,
       name: user.name,
       profile: user.profile,
     });
@@ -52,7 +51,7 @@ export const updateMyProfile = async (
       return;
     }
 
-    const { name, bio, avatarUrl, socials } = parse.data;
+    const { bio, avatarUrl, socials } = parse.data;
 
     const updatedProfile = await prisma.profile.update({
       where: {
@@ -65,19 +64,9 @@ export const updateMyProfile = async (
       },
     });
 
-    await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        name: name,
-      },
-    });
-
     res.status(200).json({
       success: true,
       profile: {
-        name,
         bio: updatedProfile.bio,
         avatarUrl: updatedProfile.avatarUrl,
         socials: updatedProfile.socialsJson
